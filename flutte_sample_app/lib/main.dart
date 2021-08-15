@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutte_sample_app/main_model.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -25,9 +26,11 @@ class MyAppStateful extends StatefulWidget {
 }
 
 class MyAppState extends State<MyAppStateful> {
-  Future sample() async {
-    print(111);
+  Future _launchNativeScreen() async {
+    await _methodCannel.invokeMethod("test", "parameters");
   }
+
+  MethodChannel _methodCannel = MethodChannel("package.name/masaki");
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +47,7 @@ class MyAppState extends State<MyAppStateful> {
                 children: [
                   Text(model.countText.toString(), style: TextStyle(fontSize: 30)),
                   countButton(model),
+                  methodButton(),
                   centerintrinsicWidth(),
                   padding(),
                   row(),
@@ -62,6 +66,14 @@ class MyAppState extends State<MyAppStateful> {
       child: Text("CountUp!!"),
         onPressed: () {
           model.changeText();
+        });
+  }
+
+  Widget methodButton() {
+    return RaisedButton(
+        child: Text("Method!!"),
+        onPressed: () {
+          _launchNativeScreen();
         });
   }
 
