@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 
 class MainModel extends ChangeNotifier {
-  var text = 'マサキ';
+  var countText = 1;
 
   void changeText() {
-    text = "変更後マサキ";
+    countText = countText + 1;
     notifyListeners();
   }
 }

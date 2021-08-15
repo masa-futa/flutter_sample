@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutte_sample_app/main_model.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +25,10 @@ class MyAppStateful extends StatefulWidget {
 }
 
 class MyAppState extends State<MyAppStateful> {
+  Future sample() async {
+    print(111);
+  }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<MainModel>(
@@ -36,12 +42,12 @@ class MyAppState extends State<MyAppStateful> {
             return Center(
               child: Column(
                 children: [
-                  Text(model.text, style: TextStyle(fontSize: 30),),
-                  RaisedButton(
-                    child: Text("ボタン"),
-                  onPressed: () {
-                      model.changeText();
-                  },)
+                  Text(model.countText.toString(), style: TextStyle(fontSize: 30)),
+                  countButton(model),
+                  centerintrinsicWidth(),
+                  padding(),
+                  row(),
+                  // listView()
                 ],
               ),
             );
@@ -50,5 +56,67 @@ class MyAppState extends State<MyAppStateful> {
       ),
     );
   }
+  /// カウントアップボタン
+  Widget countButton(MainModel model) {
+    return RaisedButton(
+      child: Text("CountUp!!"),
+        onPressed: () {
+          model.changeText();
+        });
+  }
 
+  Widget centerintrinsicWidth() {
+    return Center(
+      child: IntrinsicWidth(
+        child: Column(
+          children: [
+            Text("IntrinsicWidth"),
+            Text("IntrinsicWidth"),
+            Text("IntrinsicWidth"),
+            Text("IntrinsicWidth")
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget padding() {
+    return Padding(
+      padding: EdgeInsets.all(50),
+      child: IntrinsicWidth(
+        child: Column(
+          children: [
+            Text("padding"),
+            Text("padding"),
+            Text("padding"),
+            Text("padding")
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget row() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Text("row"),
+        Text("row"),
+        Text("row"),
+        Text("row"),
+      ],
+    );
+  }
+  /// ListView
+  // Widget listView() {
+  //   return ListView.builder(
+  //       itemBuilder: (context, index) {
+  //         return RaisedButton(
+  //           child: Text("count: $index"),
+  //             onPressed: () {}
+  //             );
+  //       },
+  //       itemCount: 5,
+  //       );
+  // }
 }
